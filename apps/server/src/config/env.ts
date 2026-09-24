@@ -28,4 +28,10 @@ export const ENV = {
     .map((s) => s.trim()),
   UPLOAD_DIR: path.resolve(process.cwd(), process.env.UPLOAD_DIR || 'uploads'),
   MAX_FILE_SIZE_MB: parseInt(process.env.MAX_FILE_SIZE_MB || '25', 10),
+  S3_ENDPOINT: process.env.S3_ENDPOINT || '',
+  S3_REGION: process.env.S3_REGION || 'auto',
+  S3_BUCKET: process.env.S3_BUCKET || '',
+  S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID || '',
+  S3_SECRET_ACCESS_KEY: process.env.S3_SECRET_ACCESS_KEY || '',
+  S3_PUBLIC_URL: process.env.S3_PUBLIC_URL || '',
 };

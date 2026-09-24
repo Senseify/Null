@@ -1,31 +1,17 @@
 import { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs';
 import crypto from 'crypto';
 import { ENV } from '../config/env';
-
-// Ensure upload directory exists
-if (!fs.existsSync(ENV.UPLOAD_DIR)) {
-  fs.mkdirSync(ENV.UPLOAD_DIR, { recursive: true });
-}
+import { storageService } from '../services/storage.service';
 
 // Disallowed extensions for security
 const DISALLOWED_EXTENSIONS = new Set([
   '.exe', '.bat', '.cmd', '.sh', '.msi', '.vbs', '.js', '.jar', '.com', '.scr', '.ps1'
 ]);
 
-// Configure disk storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, ENV.UPLOAD_DIR);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const safeName = `${Date.now()}-${crypto.randomBytes(8).toString('hex')}${ext}`;
-    cb(null, safeName);
-  },
-});
+// Memory storage keeps file buffers in memory for streaming to persistent storage
+const storage = multer.memoryStorage();
 
 export const uploadMiddleware = multer({
   storage,
@@ -49,19 +35,28 @@ export async function uploadAttachment(req: Request, res: Response): Promise<voi
 
   const file = req.file;
   const isImage = file.mimetype.startsWith('image/');
+  const ext = path.extname(file.originalname).toLowerCase();
+  const safeFilename = `${Date.now()}-${crypto.randomBytes(8).toString('hex')}${ext}`;
 
-  const attachmentData = {
-    url: `/api/attachments/${file.filename}`,
-    name: file.originalname,
-    size: file.size,
-    mimeType: file.mimetype,
-    isImage,
-  };
+  try {
+    const fileUrl = await storageService.upload(safeFilename, file.buffer, file.mimetype);
 
-  res.status(201).json({
-    success: true,
-    data: attachmentData,
-  });
+    const attachmentData = {
+      url: fileUrl,
+      name: file.originalname,
+      size: file.size,
+      mimeType: file.mimetype,
+      isImage,
+    };
+
+    res.status(201).json({
+      success: true,
+      data: attachmentData,
+    });
+  } catch (err: any) {
+    console.error('[Upload Error]', err);
+    res.status(500).json({ success: false, error: 'Failed to store attachment.', statusCode: 500 });
+  }
 }
 
 export async function serveAttachment(req: Request, res: Response): Promise<void> {
@@ -69,12 +64,24 @@ export async function serveAttachment(req: Request, res: Response): Promise<void
 
   // Prevent path traversal
   const safeFilename = path.basename(filename);
-  const filePath = path.join(ENV.UPLOAD_DIR, safeFilename);
 
-  if (!fs.existsSync(filePath)) {
-    res.status(404).json({ success: false, error: 'File not found.', statusCode: 404 });
-    return;
+  try {
+    const fileData = await storageService.get(safeFilename);
+
+    if (!fileData) {
+      res.status(404).json({ success: false, error: 'File not found.', statusCode: 404 });
+      return;
+    }
+
+    res.setHeader('Content-Type', fileData.mimeType);
+    if (fileData.size) {
+      res.setHeader('Content-Length', fileData.size.toString());
+    }
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+
+    fileData.stream.pipe(res);
+  } catch (err: any) {
+    console.error('[Serve Error]', err);
+    res.status(500).json({ success: false, error: 'Failed to retrieve attachment.', statusCode: 500 });
   }
-
-  res.sendFile(filePath);
 }
