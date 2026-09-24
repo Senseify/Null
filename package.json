@@ -1,0 +1,36 @@
+{
+  "name": "null-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NULL - Private Communications Platform for Friends",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:server": "npm --workspace=apps/server run dev",
+    "dev:desktop": "npm --workspace=apps/desktop run dev",
+    "dev:mobile": "npm --workspace=apps/mobile run dev",
+    "dev": "npm run dev:server",
+    "build:packages": "npm --workspace=packages/shared run build && npm --workspace=packages/database run build",
+    "build:server": "npm --workspace=apps/server run build",
+    "build:desktop": "npm --workspace=apps/desktop run build",
+    "build": "npm run build:packages && npm run build:server && npm run build:desktop",
+    "db:migrate": "npm --workspace=packages/database run migrate",
+    "test:e2e": "node ./apps/server/dist/tests/e2e-test.js",
+    "tauri:dev": "npm --workspace=apps/desktop run tauri:dev",
+    "tauri:build": "npm --workspace=apps/desktop run tauri:build"
+  },
+  "keywords": [
+    "communications",
+    "chat",
+    "private",
+    "tauri",
+    "react",
+    "socketio",
+    "express",
+    "postgresql"
+  ],
+  "author": "NULL Team",
+  "license": "UNLICENSED"
+}

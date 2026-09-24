@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: null-server
+    runtime: node
+    plan: free
+    healthCheckPath: /api/health
+    buildCommand: npm install --include=dev && npm --workspace=packages/shared run build && npm --workspace=packages/database run build && npm --workspace=apps/server run build
+    startCommand: node apps/server/dist/index.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: null-db
+          property: connectionString
+      - key: CORS_ORIGIN
+        value: "*"
+
+databases:
+  - name: null-db
+    plan: free
+    databaseName: nulldb
+    user: nulluser

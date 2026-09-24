@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "NULL",
+    "slug": "null-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0C0E",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B0C0E"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.null.mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B0C0E"
+      },
+      "package": "com.null.mobile"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NULL</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <style>
+      /* Base resets to eliminate scrollbars and create launcher feel */
+      html, body, #root {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        user-select: none;
+        background-color: #0B0C0E;
+        color: #F0F1F3;
+      }
+      /* Custom scrollbars */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #252830;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #333742;
+      }
+    </style>
+  </head>
+  <body class="bg-null-bg text-null-text antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

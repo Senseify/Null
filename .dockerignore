@@ -1,0 +1,16 @@
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.git/
+.xwin-cache/
+**/.xwin-cache/
+data/
+**/data/
+uploads/
+**/uploads/
+apps/desktop/
+apps/mobile/
+.env
+.env.*
+*.log
