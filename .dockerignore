@@ -9,8 +9,11 @@ data/
 **/data/
 uploads/
 **/uploads/
-apps/desktop/
-apps/mobile/
+apps/desktop/src/
+apps/desktop/src-tauri/
+apps/desktop/public/
+apps/mobile/src/
+apps/mobile/assets/
 .env
 .env.*
 *.log
