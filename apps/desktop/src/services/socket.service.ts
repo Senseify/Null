@@ -10,7 +10,7 @@ const getWsUrl = (): string => {
   if (typeof window !== 'undefined' && window.location.origin.includes('localhost:5173')) {
     return window.location.origin;
   }
-  return 'http://localhost:4000';
+  return 'https://null-server-g543.onrender.com';
 };
 const WS_URL = getWsUrl();
 

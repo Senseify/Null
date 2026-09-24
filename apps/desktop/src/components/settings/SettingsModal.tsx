@@ -18,7 +18,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   // Network tab state
-  const currentServerUrl = (typeof window !== 'undefined' && localStorage.getItem('null_server_url')) || import.meta.env.VITE_API_URL || 'http://localhost:4000';
+  const currentServerUrl = (typeof window !== 'undefined' && localStorage.getItem('null_server_url')) || import.meta.env.VITE_API_URL || 'https://null-server-g543.onrender.com';
   const [serverUrlInput, setServerUrlInput] = useState(currentServerUrl);
 
   // Security tab state

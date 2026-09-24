@@ -1,7 +1,7 @@
 import { ApiResponse } from '@null/shared';
 
-// Default mobile API host (configured for localhost / LAN gateway in development)
-const MOBILE_API_URL = 'http://localhost:4000';
+// Default mobile API host (configured for production Render backend)
+const MOBILE_API_URL = 'https://null-server-g543.onrender.com';
 
 export class MobileApiClient {
   private static token: string | null = null;

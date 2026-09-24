@@ -15,7 +15,7 @@ export const AuthScreen: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showGatewayModal, setShowGatewayModal] = useState(false);
-  const currentGateway = (typeof window !== 'undefined' && localStorage.getItem('null_server_url')) || import.meta.env.VITE_API_URL || 'http://localhost:4000';
+  const currentGateway = (typeof window !== 'undefined' && localStorage.getItem('null_server_url')) || import.meta.env.VITE_API_URL || 'https://null-server-g543.onrender.com';
   const [gatewayInput, setGatewayInput] = useState(currentGateway);
 
   const handleSubmit = async (e: React.FormEvent) => {

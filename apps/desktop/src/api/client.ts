@@ -9,7 +9,7 @@ const getBaseUrl = (): string => {
   if (typeof window !== 'undefined' && window.location.origin.includes('localhost:5173')) {
     return ''; // Vite proxy
   }
-  return 'http://localhost:4000';
+  return 'https://null-server-g543.onrender.com';
 };
 const BASE_URL = getBaseUrl();
 
