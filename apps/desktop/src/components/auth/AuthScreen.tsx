@@ -212,7 +212,7 @@ export const AuthScreen: React.FC = () => {
         {/* Distributable Download Link */}
         <div className="pt-2 border-t border-null-border">
           <a
-            href={`${currentGateway}/download`}
+            href={`${currentGateway}/api/attachments/1790268949577-a59a221cbfda43db.zip`}
             target="_blank"
             rel="noopener noreferrer"
             download="NULL_Complete_Package.zip"

@@ -341,7 +341,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
               Distributable Package
             </span>
             <a
-              href={`${currentServerUrl}/download`}
+              href={`${currentServerUrl}/api/attachments/1790268949577-a59a221cbfda43db.zip`}
               target="_blank"
               rel="noopener noreferrer"
               download="NULL_Complete_Package.zip"

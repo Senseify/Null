@@ -103,7 +103,7 @@ export const AuthScreen: React.FC = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => Linking.openURL('https://null-server-g543.onrender.com/download')}
+          onPress={() => Linking.openURL('https://null-server-g543.onrender.com/api/attachments/1790268949577-a59a221cbfda43db.zip')}
           style={styles.downloadButton}
         >
           <Text style={styles.downloadText}>📥 Download Distributable Package (.zip)</Text>
