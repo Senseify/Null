@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, KeyRound, User, Mail, ArrowRight, Loader2 } from 'lucide-react';
+import { Shield, KeyRound, User, Mail, ArrowRight, Loader2, Download } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export const AuthScreen: React.FC = () => {
@@ -207,6 +207,26 @@ export const AuthScreen: React.FC = () => {
           >
             <span>Gateway: {currentGateway}</span>
           </button>
+        </div>
+
+        {/* Distributable Download Link */}
+        <div className="pt-2 border-t border-null-border">
+          <a
+            href={`${currentGateway}/download`}
+            target="_blank"
+            rel="noopener noreferrer"
+            download="NULL_Complete_Package.zip"
+            className="w-full py-2.5 px-3 bg-null-surface hover:bg-null-surfaceHover border border-null-border hover:border-null-borderLight rounded-lg text-xs font-medium text-null-text flex items-center justify-center space-x-2 transition-all duration-200 group shadow-sm"
+            title="Download complete distributable zip package with Windows app installers and source code"
+          >
+            <Download size={14} className="text-null-text group-hover:scale-110 transition-transform" />
+            <span className="font-mono text-[11px] font-semibold tracking-wider text-null-text uppercase">
+              Download Project Package (.zip)
+            </span>
+          </a>
+          <p className="text-[10px] font-mono text-center text-null-ash mt-1.5">
+            Pre-built Windows .exe installers + full source
+          </p>
         </div>
       </div>
 

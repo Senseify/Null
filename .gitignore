@@ -43,6 +43,7 @@ apps/desktop/src-tauri/target/
 Thumbs.db
 .vscode/
 .idea/
-*.swp
-*.swo
+# Distribution archives & staging
+dist_staging/
+*.zip
 

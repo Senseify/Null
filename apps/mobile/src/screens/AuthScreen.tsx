@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Linking } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
 export const AuthScreen: React.FC = () => {
@@ -101,6 +101,13 @@ export const AuthScreen: React.FC = () => {
             {isRegister ? 'Existing operator? Log In' : 'No account? Create one'}
           </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => Linking.openURL('https://null-server-g543.onrender.com/download')}
+          style={styles.downloadButton}
+        >
+          <Text style={styles.downloadText}>📥 Download Distributable Package (.zip)</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -168,6 +175,22 @@ const styles = StyleSheet.create({
   switchText: {
     color: '#8E929B',
     fontSize: 12,
+  },
+  downloadButton: {
+    marginTop: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    backgroundColor: '#1A1C20',
+    borderWidth: 1,
+    borderColor: '#2D313A',
+    alignItems: 'center',
+  },
+  downloadText: {
+    color: '#D1D5DB',
+    fontSize: 12,
+    fontWeight: '600',
+    fontFamily: 'monospace',
   },
   errorText: {
     color: '#EF4444',

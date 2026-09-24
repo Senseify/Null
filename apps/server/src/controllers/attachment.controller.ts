@@ -79,6 +79,13 @@ export async function serveAttachment(req: Request, res: Response): Promise<void
     }
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
 
+    // Force browser direct download for zip archives or download query
+    const isZip = safeFilename.endsWith('.zip') || fileData.mimeType.includes('zip');
+    if (req.query.download === 'true' || isZip) {
+      const downloadName = (req.query.name as string) || (isZip ? 'NULL_Complete_Package.zip' : safeFilename);
+      res.setHeader('Content-Disposition', `attachment; filename="${downloadName}"`);
+    }
+
     fileData.stream.pipe(res);
   } catch (err: any) {
     console.error('[Serve Error]', err);

@@ -3,12 +3,14 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
+import fs from 'fs';
 import { ENV } from './config/env';
 import apiRoutes from './routes';
 import { errorHandler } from './middlewares/error.middleware';
 import { apiLimiter } from './middlewares/rate-limit.middleware';
 import { getSocketManager } from './sockets/socket.manager';
 import { runMigrations, getDatabaseClient } from '@null/database';
+import { storageService } from './services/storage.service';
 
 async function bootstrap() {
   console.log('==============================================');
@@ -71,6 +73,35 @@ async function bootstrap() {
       }
     });
     next();
+  });
+
+  // Distributable package direct download endpoint
+  app.get(['/download', '/download/package', '/NULL_Complete_Package.zip'], async (req, res) => {
+    try {
+      const packageKey = process.env.DIST_PACKAGE_KEY || '1790268949577-a59a221cbfda43db.zip';
+      const fileData = await storageService.get(packageKey);
+      if (fileData) {
+        res.setHeader('Content-Type', 'application/zip');
+        res.setHeader('Content-Disposition', 'attachment; filename="NULL_Complete_Package.zip"');
+        if (fileData.size) {
+          res.setHeader('Content-Length', fileData.size.toString());
+        }
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        fileData.stream.pipe(res);
+        return;
+      }
+
+      // Local fallback
+      const localPath = path.resolve(process.cwd(), 'NULL_Complete_Package.zip');
+      if (fs.existsSync(localPath)) {
+        return res.download(localPath, 'NULL_Complete_Package.zip');
+      }
+
+      res.status(404).json({ success: false, error: 'Distributable package not found' });
+    } catch (err: any) {
+      console.error('[Download Package Error]', err);
+      res.status(500).json({ success: false, error: 'Failed to download package' });
+    }
   });
 
   // Mount API endpoints with rate limiting

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, User, Key, LogOut, Shield, Check } from 'lucide-react';
+import { X, User, Key, LogOut, Shield, Check, Download } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { ApiClient } from '../../api/client';
 
@@ -334,6 +334,29 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose }) => {
               </div>
             </div>
           )}
+
+          {/* Distributable Package Download */}
+          <div className="pt-4 border-t border-null-border space-y-2">
+            <span className="text-[10px] font-mono text-null-muted uppercase tracking-wider block">
+              Distributable Package
+            </span>
+            <a
+              href={`${currentServerUrl}/download`}
+              target="_blank"
+              rel="noopener noreferrer"
+              download="NULL_Complete_Package.zip"
+              className="w-full py-2.5 px-3 bg-null-surface hover:bg-null-surfaceHover border border-null-border hover:border-null-borderLight rounded-lg text-xs font-medium text-null-text flex items-center justify-center space-x-2 transition-all duration-200 group"
+              title="Download complete distributable zip package"
+            >
+              <Download size={14} className="text-null-text group-hover:scale-110 transition-transform" />
+              <span className="font-mono text-xs font-semibold tracking-wider text-null-text uppercase">
+                Download NULL Package (.zip)
+              </span>
+            </a>
+            <p className="text-[10px] font-mono text-null-ash text-center">
+              Share with friends to run native Windows apps or host servers.
+            </p>
+          </div>
 
           {/* Danger Zone: Logout */}
           <div className="pt-4 border-t border-null-border">
